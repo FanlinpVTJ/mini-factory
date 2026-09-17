@@ -1,5 +1,7 @@
 using MiniFactory.Configuration;
 using MiniFactory.Economy;
+using MiniFactory.Persistence;
+using MiniFactory.Production;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +18,10 @@ namespace MiniFactory.Installation
             Container.Bind<IFactoryConfigurationSource>().FromInstance(source).AsSingle();
             Container.Bind<FactoryConfiguration>().FromInstance(configuration).AsSingle();
             Container.Bind<FactoryEconomy>().AsSingle().NonLazy();
+            Container.Bind<IFactoryClock>().To<SystemFactoryClock>().AsSingle();
+            Container.Bind<IFactoryProgressStorage>().To<GameSaverFactoryProgressStorage>().AsSingle();
+            Container.Bind<FactoryProduction>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FactorySession>().AsSingle();
         }
     }
 }

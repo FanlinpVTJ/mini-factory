@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using MiniFactory.Configuration;
+using MiniFactory.Persistence;
+using MiniFactory.Production;
 using ValueSystem;
 
 namespace MiniFactory.Economy
@@ -8,6 +10,8 @@ namespace MiniFactory.Economy
     public sealed class FactoryEconomy
     {
         public event Action OnChanged;
+        public event Action OnBeforeMachineChange;
+        public event Action OnMachineChanged;
 
         private readonly Dictionary<string, MachineConfiguration> _configurations = new Dictionary<string, MachineConfiguration>();
         private readonly Dictionary<string, MachineState> _machines = new Dictionary<string, MachineState>();
@@ -39,6 +43,7 @@ namespace MiniFactory.Economy
 
         public bool TryUnlock(string identifier)
         {
+            OnBeforeMachineChange?.Invoke();
             MachineState machine = GetMachine(identifier);
 
             if (machine.State != MachineStateType.Locked || !_valueSystem.TrySubtract(_currencyIdentifier, (float)machine.UnlockPrice))
@@ -48,12 +53,14 @@ namespace MiniFactory.Economy
 
             _machines[identifier] = new MachineState(_configurations[identifier], 1);
             RecalculateProduction();
+            OnMachineChanged?.Invoke();
             OnChanged?.Invoke();
             return true;
         }
 
         public bool TryUpgrade(string identifier)
         {
+            OnBeforeMachineChange?.Invoke();
             MachineState machine = GetMachine(identifier);
 
             if (!machine.CanUpgrade || !_valueSystem.TrySubtract(_currencyIdentifier, (float)machine.NextUpgradePrice))
@@ -63,6 +70,7 @@ namespace MiniFactory.Economy
 
             _machines[identifier] = new MachineState(_configurations[identifier], machine.Level + 1);
             RecalculateProduction();
+            OnMachineChanged?.Invoke();
             OnChanged?.Invoke();
             return true;
         }
@@ -83,6 +91,57 @@ namespace MiniFactory.Economy
             {
                 OnChanged?.Invoke();
             }
+        }
+
+        public FactoryProgress CaptureProgress(FactoryProductionProgress production)
+        {
+            MachineProgress[] machines = new MachineProgress[_machines.Count];
+            int index = 0;
+
+            foreach (MachineState machine in _machines.Values)
+            {
+                machines[index] = new MachineProgress
+                {
+                    Identifier = machine.Identifier,
+                    Level = machine.Level
+                };
+                index++;
+            }
+
+            FactoryProgress progress = new FactoryProgress
+            {
+                CurrencyIdentifier = _currencyIdentifier,
+                Machines = machines,
+                Production = production
+            };
+
+            return progress;
+        }
+
+        public void RestoreProgress(FactoryProgress progress)
+        {
+            if (progress.Version != 1 || progress.CurrencyIdentifier != _currencyIdentifier)
+            {
+                throw new ArgumentException("Factory progress does not match the current currency or save version.");
+            }
+
+            Dictionary<string, MachineState> restoredMachines = new Dictionary<string, MachineState>();
+
+            foreach (MachineProgress machine in progress.Machines)
+            {
+                if (_configurations.TryGetValue(machine.Identifier, out MachineConfiguration configuration))
+                {
+                    restoredMachines.Add(machine.Identifier, new MachineState(configuration, Math.Min(machine.Level, configuration.MaximumLevel)));
+                }
+            }
+
+            foreach (KeyValuePair<string, MachineState> machine in restoredMachines)
+            {
+                _machines[machine.Key] = machine.Value;
+            }
+
+            RecalculateProduction();
+            OnChanged?.Invoke();
         }
 
         private void RecalculateProduction()
