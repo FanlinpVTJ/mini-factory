@@ -15,7 +15,7 @@ namespace ValueSystem.Zenject
 
         public override void InstallBindings()
         {
-            ValuesSave valuesSave = new ValuesSave(null);
+            ValuesSave valuesSave = GameSaver.GameSaver.GetActiveProfile().GlobalValuesSave;
             Container.Bind<IValueSystem>().To<ValueSystemLogic>().AsSingle().WithArguments(_valueDatas, valuesSave).NonLazy();
         }
     }
