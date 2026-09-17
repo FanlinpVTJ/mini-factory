@@ -1,6 +1,6 @@
 {
     "name": "GameSaver",
-    "rootNamespace": "GameOn.GameSaver",
+    "rootNamespace": "GameSaver",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

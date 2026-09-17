@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GameOn.GameSaver.Editor.SaveEditor
+namespace GameSaver.Editor.SaveEditor
 {
     [Serializable]
     internal class SaveEditorDataContainer : ScriptableObject

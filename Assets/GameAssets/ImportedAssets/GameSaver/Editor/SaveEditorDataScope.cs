@@ -1,6 +1,6 @@
 using System;
 
-namespace GameOn.GameSaver.Editor.SaveEditor
+namespace GameSaver.Editor.SaveEditor
 {
     internal enum SaveEditorDataScope
     {

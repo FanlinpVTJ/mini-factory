@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
-namespace GameOn.GameSaver
+namespace GameSaver
 {
     [CreateAssetMenu(fileName = "GameSaverSettings", menuName = "Game Saver/Game Saver Settings", order = 131)]
     public class GameSaverSettings : ScriptableObject

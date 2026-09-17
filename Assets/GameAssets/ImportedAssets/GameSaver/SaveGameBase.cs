@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameOn.GameSaver
+namespace GameSaver
 {
     [System.Serializable]
     public class SaveGameBase

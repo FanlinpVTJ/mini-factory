@@ -2,7 +2,7 @@
 using System;
 
 
-namespace GameOn.GameSaver
+namespace GameSaver
 {
     public class GameSaverMonoListener: MonoBehaviour
     {

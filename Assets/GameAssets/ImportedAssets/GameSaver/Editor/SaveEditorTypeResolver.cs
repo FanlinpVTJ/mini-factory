@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using GameOn.GameSaver;
+using GameSaver;
 
-namespace GameOn.GameSaver.Editor.SaveEditor
+namespace GameSaver.Editor.SaveEditor
 {
     internal readonly struct SaveEditorTypeInfo
     {

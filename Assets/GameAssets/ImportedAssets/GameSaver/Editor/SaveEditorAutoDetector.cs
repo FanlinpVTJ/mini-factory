@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace GameOn.GameSaver.Editor.SaveEditor
+namespace GameSaver.Editor.SaveEditor
 {
     internal sealed class SaveEditorAutoDetector
     {

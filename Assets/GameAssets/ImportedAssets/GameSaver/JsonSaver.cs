@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace GameOn.GameSaver
+namespace GameSaver
 {
     public static class JsonSaver
     {
