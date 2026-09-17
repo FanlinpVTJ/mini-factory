@@ -1,3 +1,4 @@
+using MiniFactory.Analytics;
 using MiniFactory.Configuration;
 using MiniFactory.Economy;
 using MiniFactory.Persistence;
@@ -22,8 +23,11 @@ namespace MiniFactory.Installation
             Container.Bind<IFactoryClock>().To<SystemFactoryClock>().AsSingle();
             Container.Bind<IFactoryProgressStorage>().To<GameSaverFactoryProgressStorage>().AsSingle();
             Container.Bind<FactoryProduction>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FactorySession>().AsSingle();
             Container.BindInterfacesTo<UnityPurchaseService>().AsSingle();
+            Container.Bind<IAnalyticsProvider>().To<ConsoleAnalyticsProvider>().AsSingle();
+            Container.Bind<IAnalyticsService>().To<AnalyticsService>().AsSingle();
+            Container.BindInterfacesTo<FactoryAnalytics>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FactorySession>().AsSingle();
         }
     }
 }

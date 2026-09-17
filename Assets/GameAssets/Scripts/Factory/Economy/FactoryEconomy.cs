@@ -12,6 +12,8 @@ namespace MiniFactory.Economy
         public event Action OnChanged;
         public event Action OnBeforeMachineChange;
         public event Action OnMachineChanged;
+        public event Action<string, int> OnMachineUnlocked;
+        public event Action<string, int> OnMachineUpgraded;
 
         private readonly Dictionary<string, MachineConfiguration> _configurations = new Dictionary<string, MachineConfiguration>();
         private readonly Dictionary<string, MachineState> _machines = new Dictionary<string, MachineState>();
@@ -53,6 +55,7 @@ namespace MiniFactory.Economy
 
             _machines[identifier] = new MachineState(_configurations[identifier], 1);
             RecalculateProduction();
+            OnMachineUnlocked?.Invoke(identifier, 1);
             OnMachineChanged?.Invoke();
             OnChanged?.Invoke();
             return true;
@@ -68,8 +71,10 @@ namespace MiniFactory.Economy
                 return false;
             }
 
-            _machines[identifier] = new MachineState(_configurations[identifier], machine.Level + 1);
+            int level = machine.Level + 1;
+            _machines[identifier] = new MachineState(_configurations[identifier], level);
             RecalculateProduction();
+            OnMachineUpgraded?.Invoke(identifier, level);
             OnMachineChanged?.Invoke();
             OnChanged?.Invoke();
             return true;
