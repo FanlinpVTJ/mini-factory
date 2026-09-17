@@ -44,7 +44,7 @@ namespace MiniFactory.UI
 
             _displayedProduction = production;
             string amount = production < 1000 ? production.ToString("G3") : TextFormatter.FormatNumber((float)production);
-            _text.text = amount + "/с";
+            _text.text = amount;
         }
     }
 }

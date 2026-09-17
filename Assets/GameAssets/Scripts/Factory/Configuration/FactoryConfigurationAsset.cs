@@ -22,10 +22,13 @@ namespace MiniFactory.Configuration
         [Header("Offline Production")]
         [SerializeField, Min(0)] private double _maximumOfflineSeconds = 28800;
 
+        [Header("Purchases")]
+        [SerializeField] private PurchaseConfiguration _purchase = new PurchaseConfiguration();
+
         public FactoryConfiguration Load()
         {
             FactoryConfiguration configuration = new FactoryConfiguration(_currencyIdentifier, _machines, _boostEnabled,
-                _boostDurationSeconds, _boostMultiplier, _maximumOfflineSeconds);
+                _boostDurationSeconds, _boostMultiplier, _maximumOfflineSeconds, _purchase);
             configuration.Validate();
             MachineConfiguration[] machines = new MachineConfiguration[_machines.Length];
 
@@ -38,7 +41,7 @@ namespace MiniFactory.Configuration
             }
 
             FactoryConfiguration result = new FactoryConfiguration(_currencyIdentifier, machines, _boostEnabled,
-                _boostDurationSeconds, _boostMultiplier, _maximumOfflineSeconds);
+                _boostDurationSeconds, _boostMultiplier, _maximumOfflineSeconds, _purchase);
             return result;
         }
     }
