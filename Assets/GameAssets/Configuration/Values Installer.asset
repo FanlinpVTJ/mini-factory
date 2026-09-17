@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0234821253a5c494fae3621a0970738d, type: 3}
   m_Name: Values Installer
   m_EditorClassIdentifier: Assembly-CSharp::ValueSystem.Zenject.ValuesInstaller
-  _valueDatas: []
+  _valueDatas:
+  - {fileID: 11400000, guid: 103c29b615141b044b1b6f63ceb9dd0b, type: 2}

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1c97011312727428ad735a603f9ff8, type: 3}
   m_Name: FactoryValue
   m_EditorClassIdentifier: Assembly-CSharp::ValueSystem.ValueData
-  _id: 
+  _id: FactoryValue
   _minCount: 0
   _isInfinite: 1
   _maxCount: 0
   _icon: {fileID: 0}
   _color: {r: 1, g: 1, b: 1, a: 1}
-  _displayName: 
+  _displayName: Gold
   _defaultCount: 0
