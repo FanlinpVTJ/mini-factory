@@ -81,9 +81,9 @@ namespace MiniFactory.UI
                 bool locked = machine.State == MachineStateType.Locked;
                 _stateText.text = locked ? "Закрыта" : "Работает";
                 _levelText.SetText("Уровень: {0}", machine.Level);
-                _unlockPriceText.text = TextFormatter.FormatNumber((float)machine.UnlockPrice);
+                _unlockPriceText.text = "Открыть за: " + TextFormatter.FormatNumber((float)machine.UnlockPrice);
                 _upgradePriceText.text = machine.CanUpgrade
-                    ? TextFormatter.FormatNumber((float)machine.NextUpgradePrice)
+                    ? "Улучшить за: " + TextFormatter.FormatNumber((float)machine.NextUpgradePrice)
                     : locked ? "—" : "Максимум";
                 _unlockButton.gameObject.SetActive(locked);
                 _upgradeButton.gameObject.SetActive(!locked);

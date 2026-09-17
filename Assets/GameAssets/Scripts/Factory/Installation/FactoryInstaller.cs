@@ -2,6 +2,7 @@ using MiniFactory.Configuration;
 using MiniFactory.Economy;
 using MiniFactory.Persistence;
 using MiniFactory.Production;
+using MiniFactory.Purchasing;
 using UnityEngine;
 using Zenject;
 
@@ -22,6 +23,7 @@ namespace MiniFactory.Installation
             Container.Bind<IFactoryProgressStorage>().To<GameSaverFactoryProgressStorage>().AsSingle();
             Container.Bind<FactoryProduction>().AsSingle();
             Container.BindInterfacesAndSelfTo<FactorySession>().AsSingle();
+            Container.BindInterfacesTo<UnityPurchaseService>().AsSingle();
         }
     }
 }

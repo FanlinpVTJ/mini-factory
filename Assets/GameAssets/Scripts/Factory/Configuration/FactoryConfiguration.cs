@@ -16,9 +16,11 @@ namespace MiniFactory.Configuration
         public double BoostMultiplier { get; }
 
         public double MaximumOfflineSeconds { get; }
+        public PurchaseConfiguration Purchase { get; }
 
         public FactoryConfiguration(string currencyIdentifier, MachineConfiguration[] machines, bool boostEnabled,
-            double boostDurationSeconds, double boostMultiplier, double maximumOfflineSeconds)
+            double boostDurationSeconds, double boostMultiplier, double maximumOfflineSeconds,
+            PurchaseConfiguration purchase)
         {
             CurrencyIdentifier = currencyIdentifier;
             Machines = machines;
@@ -26,6 +28,7 @@ namespace MiniFactory.Configuration
             BoostDurationSeconds = boostDurationSeconds;
             BoostMultiplier = boostMultiplier;
             MaximumOfflineSeconds = maximumOfflineSeconds;
+            Purchase = purchase;
         }
 
         public void Validate()
@@ -38,6 +41,13 @@ namespace MiniFactory.Configuration
             ValidateNumber(BoostDurationSeconds, 1, nameof(BoostDurationSeconds));
             ValidateNumber(BoostMultiplier, 1, nameof(BoostMultiplier));
             ValidateNumber(MaximumOfflineSeconds, 0, nameof(MaximumOfflineSeconds));
+
+            if (Purchase == null || string.IsNullOrWhiteSpace(Purchase.ProductIdentifier)
+                || float.IsNaN(Purchase.CurrencyAmount) || float.IsInfinity(Purchase.CurrencyAmount)
+                || Purchase.CurrencyAmount <= 0)
+            {
+                throw new ArgumentException("Purchase configuration must contain a product identifier and positive reward.");
+            }
 
             if (Machines.Length < 3 || Machines[0] == null || !Machines[0].InitiallyUnlocked)
             {
