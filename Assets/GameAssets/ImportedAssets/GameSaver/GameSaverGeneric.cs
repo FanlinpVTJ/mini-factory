@@ -3,7 +3,7 @@ using System.IO;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-namespace GameOn.GameSaver
+namespace GameSaver
 {
 
     public class GameSaverGeneric<TSave, TProfile> : GameSaverBase where TSave : SaveGameBase, new() where TProfile : new()

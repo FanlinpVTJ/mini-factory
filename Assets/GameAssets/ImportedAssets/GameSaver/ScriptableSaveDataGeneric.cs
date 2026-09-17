@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameOn.GameSaver
+namespace GameSaver
 {
     public class ScriptableSaveDataBase : ScriptableObject 
     {

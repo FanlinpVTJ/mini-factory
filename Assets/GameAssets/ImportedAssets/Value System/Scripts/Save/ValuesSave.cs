@@ -6,14 +6,24 @@ namespace ValueSystem.Save
 	[System.Serializable]
 	public class ValuesSave
     {
-		public SerializedDictionary<string, float> ValueAmounts = new();
+		public CurrencyAmounts ValueAmounts = new CurrencyAmounts();
 
 		private Action _saveAction;
+
+        [Serializable]
+        public sealed class CurrencyAmounts : SerializedDictionary<string, float>
+        {
+        }
 
         public ValuesSave(Action saveAction)
 		{
 			_saveAction = saveAction;
 		}
+
+        public void SetSaveAction(Action saveAction)
+        {
+            _saveAction = saveAction;
+        }
 
 		public float GetValue(string id, float defaultAmmount)
 		{

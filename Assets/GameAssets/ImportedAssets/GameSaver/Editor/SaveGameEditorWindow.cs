@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace GameOn.GameSaver.Editor.SaveEditor
+namespace GameSaver.Editor.SaveEditor
 {
     public class SaveGameEditorWindow : EditorWindow
     {
